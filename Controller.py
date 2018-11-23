@@ -25,6 +25,7 @@ from View.View import View
 ###########################################################################
 class Controller:
     Version = 1.0
+    Website = "https://www.wangsansan.com"
 
     def __init__(self):
 
@@ -55,8 +56,7 @@ class Controller:
         #################################
         # 初始化
         #################################
-        print(self.Conf)
-        self.view.init(target=self.Conf['url'], mode=self.Conf['runMode']  )
+        self.view.init(target=self.Conf['url'], mode=self.Conf['runMode'])
 
         #################################
         # 连接 Model & View
@@ -71,13 +71,13 @@ class Controller:
     def run(self):
         self.view.run()
 
-    def do_work(self, evt=None):
+    def do_work(self, evt=None):                    # 业务逻辑的参数输入事件
         target = self.Conf['url']
-        self.view.show("target: " + str(target))
+        self.view.show("Input: " + str(target))
         self.model.start(target)
 
-    def finish(self, data):
-        self.view.show(data)
+    def finish(self, data):                         # 业务逻辑执行完成的结果输出回调函数
+        self.view.show("Result: " + data)
 
     def usage_check(self):
         weight = 0              # 参数权重总和
@@ -118,8 +118,14 @@ class Controller:
             self.usage()
 
     def usage(self):
-        print("Version " + str(Controller.Version) + "  - http://xxx.xxx.xxx ")
+        print("Version " + str(Controller.Version) + "  - " + str(Controller.Website))
+        print("")
         print("Usage: python " + sys.argv[0] + " [show|<Options>]")
+        print(" Example:")
+        print("     python " + sys.argv[0] + " show")
+        print("     python " + sys.argv[0] + " -m ./Target.list -o \"./save.txt\"")
+        print("     python " + sys.argv[0] + " -u https://www.wangsansan.com -o \"./save.txt\"")
+        print(" ---")
         print("")
         print(" show \t\t\t Start GUI")
         print(" ------")
@@ -128,7 +134,7 @@ class Controller:
         print("")
         print("     <Target>: \t\t\t\t Choose one of them, The priority of \"-u(--url)\" is greater than \"-m(--multi)\"")
         print("         -u, --url <url> \t\t Target link.")
-        print("         -m, --multi <filename> \t Read target list from a file. The 1 row is a target.")
+        print("         -m, --multi <filename> \t Read target list from a file. The one row is a target.")
         print("")
         print("     -o, --output <filename> \t\t Output result data to a file.")
         exit()

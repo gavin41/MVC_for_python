@@ -12,7 +12,7 @@
 ###########################################################################
 
 import wx
-from .Window.Main import WindowMain
+from .Window.WindowMain import WindowMain
 
 class View(wx.Frame):
 
@@ -47,7 +47,7 @@ class View(wx.Frame):
     #################################
     def window_init(self, title=DefaultTitle, size=DefaultSize, target=None, cbk_start=None):
 
-        if(self.wInitFlag == 1):
+        if(self.wInitFlag == View.STATUS_SUCCESS):
             return
         self.wxApp = wx.App()
         self.main = WindowMain(None, title=title, size=size)
@@ -61,10 +61,6 @@ class View(wx.Frame):
 
     def window_run(self, title=DefaultTitle, size=DefaultSize):
         self.window_init(title, size)
-        self.window_start()
-
-    def window_start(self):
-        self.runMode = View.RunMode_GUI
         self.main.Show()
         self.wxApp.MainLoop()
 
